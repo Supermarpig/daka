@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+g
       - name: Testing
         run: npm test
 
@@ -47,13 +47,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get lowercase repository name
+        id: repo
+        run: echo "lowercase=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: |
-            docker.io/${{ github.repository }}
-            ghcr.io/${{ github.repository }}
+            docker.io/${{ steps.repo.outputs.lowercase }}
+            ghcr.io/${{ steps.repo.outputs.lowercase }}
           tags: |
             type=raw,value=latest
             type=raw,value={{sha}}
@@ -64,5 +68,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=docker.io/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=docker.io/${{ github.repository }}:buildcache,mode=max
+          cache-from: type=registry,ref=docker.io/${{ steps.repo.outputs.lowercase }}:buildcache
+          cache-to: type=registry,ref=docker.io/${{ steps.repo.outputs.lowercase }}:buildcache,mode=max
