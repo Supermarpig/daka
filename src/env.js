@@ -7,10 +7,10 @@ const IMMEDIATE_DAKA = process.env.IMMEDIATE_DAKA
   ? process.env.IMMEDIATE_DAKA !== '0'
   : false;
 const DELAY_START_MINS = Number.isNaN(Number(process.env.DELAY_START_MINS))
-  ? 5
+  ? 15
   : +process.env.DELAY_START_MINS;
 const DELAY_END_MINS = Number.isNaN(Number(process.env.DELAY_END_MINS))
-  ? 15
+  ? 30
   : +process.env.DELAY_END_MINS;
 const MAX_RETRY_COUNT = Number.isNaN(Number(process.env.MAX_RETRY_COUNT))
   ? 3

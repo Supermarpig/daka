@@ -26,10 +26,19 @@ class Daka {
       console.log('Error:', e);
 
       if (this.retryCount < this.maxRetryCount) {
-        console.log('Some error happen, retry in 3 secs');
-        this.retryCount += 1;
+        // 檢查是否為頻率限制錯誤
+        const isContinuousCheckInError = e.message && e.message.includes('PT_PlsDonotContinuousCheckIn');
+        
+        if (isContinuousCheckInError) {
+          console.log('Frequency limit detected, waiting 65 seconds before retry...');
+          this.retryCount += 1;
+          await sleep(65000); // 等待65秒（多於1分鐘）
+        } else {
+          console.log('Some error happen, retry in 3 secs');
+          this.retryCount += 1;
+          await sleep(3000);
+        }
 
-        await sleep(3000);
         await this.punch();
       }
     }
