@@ -52,7 +52,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ${{ github.repository }}
+            docker.io/${{ github.repository }}
             ghcr.io/${{ github.repository }}
           tags: |
             type=raw,value=latest
@@ -64,5 +64,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=${{ github.repository }}:buildcache,mode=max
+          cache-from: type=registry,ref=docker.io/${{ github.repository }}:buildcache
+          cache-to: type=registry,ref=docker.io/${{ github.repository }}:buildcache,mode=max
