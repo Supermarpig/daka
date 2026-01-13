@@ -30,7 +30,7 @@ jobs:
         run: npm install
 
       - name: Daka gogo
-        if: github.event.schedule == '30 23 * * *'
+        if: github.event.schedule == '55 23 * * *'
         run: node src/index.js S > result.md
 
       - name: Daka bye
