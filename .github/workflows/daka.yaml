@@ -51,7 +51,7 @@ jobs:
             const fs = require('fs').promises;
 
             // Read the result file using promise-based fs
-            const result = await fs.readFile('./result.md', 'utf8');
+            const result = await fs.readFile('./cli/result.md', 'utf8');
 
             // Determine result status
             let resultStatus = 'failed';
